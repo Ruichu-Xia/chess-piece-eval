@@ -1,6 +1,7 @@
 import os
 
 import torch
+from tqdm import tqdm
 
 
 def train_model(model,
@@ -53,7 +54,8 @@ def train_model_single_epoch(
 ):
     model.train()
     total_loss = 0
-    for input_vector, target_eval in train_loader:
+    progress_bar = tqdm(train_loader, desc="Training", leave=True)
+    for input_vector, target_eval in progress_bar:
         input_vector = input_vector.to(device)
         target_eval = target_eval.to(device)
 
@@ -68,6 +70,8 @@ def train_model_single_epoch(
         scaler.update()
 
         total_loss += loss.item()
+
+        progress_bar.set_postfix({"loss": loss.item()})
 
     avg_train_loss = total_loss / len(train_loader)
     return avg_train_loss
