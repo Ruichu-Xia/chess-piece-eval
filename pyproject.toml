@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "chess-piece-eval"
+version = "0.1.0"
+description = ""
+authors = ["ericxia1220 <ericxia1220@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10.12"
+peewee = "^3.17.7"
+zstandard = "^0.23.0"
+jsonlines = "^4.0.0"
+loguru = "^0.7.2"
+numpy = "^2.1.2"
+tqdm = "^4.67.1"
+pydantic-settings = "^2.7.1"
+torch = "^2.5.1"
+chess = "^1.11.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
