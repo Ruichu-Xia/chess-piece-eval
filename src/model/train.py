@@ -1,3 +1,5 @@
+import os
+
 import torch
 
 
@@ -93,3 +95,15 @@ def validate_model_single_epoch(
 
     avg_val_loss = total_loss / len(val_loader)
     return avg_val_loss
+
+
+def save_checkpoint(epoch, model, history, checkpoint_dir, test_indices=None):
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    checkpoint_path = os.path.join(checkpoint_dir, f"ckpt_{epoch}")
+    torch.save({
+        "epoch": epoch,
+        "model_state_dict": model.state_dict(),
+        "history": history,
+        "test_indices": test_indices,
+    }, checkpoint_path)
+    print(f"Model checkpoint saved at {checkpoint_path}")
