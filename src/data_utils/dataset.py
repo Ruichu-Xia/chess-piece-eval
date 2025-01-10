@@ -14,6 +14,9 @@ class ChessValueDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
+        if isinstance(idx, slice):
+            return ChessValueDataset(self.data[idx])
+
         fen, eval = self.data[idx]
         input_vector = self.fen_to_vector(fen)
         eval_tensor = torch.tensor(eval, dtype=torch.float32)

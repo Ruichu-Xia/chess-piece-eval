@@ -51,6 +51,7 @@ def train_model_single_epoch(
         optimizer,
         device,
         scaler,
+        grad_clip
 ):
     model.train()
     total_loss = 0
@@ -64,8 +65,18 @@ def train_model_single_epoch(
             pred_eval = torch.sum(pred_vector, dim=1)
             loss = criterion(pred_eval, target_eval)
 
+        if torch.isnan(loss) or torch.isinf(loss):
+            print("Detected NaN or Inf loss. Skipping batch.")
+            continue
+
         optimizer.zero_grad()
         scaler.scale(loss).backward()
+
+        if grad_clip:
+            scaler.unscale_(optimizer)
+            torch.nn.utils.clip_grad_norm_(model.parameters(),
+                                           max_norm=grad_clip)
+
         scaler.step(optimizer)
         scaler.update()
 

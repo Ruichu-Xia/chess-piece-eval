@@ -18,14 +18,19 @@ def show_board_from_fen(fen):
     # display(SVG(url=_svg_url(fen)))
 
 
-def split_dataset(dataset, train_size, val_size):
+def split_dataset(dataset, train_size, val_size, random=False):
     total_size = len(dataset)
     train_size = int(0.8 * total_size)
     val_size = int(0.1 * total_size)
     test_size = total_size - train_size - val_size
 
-    train_dataset, val_dataset, test_dataset = random_split(
-        dataset,
-        [train_size, val_size, test_size]
-    )
+    if random:
+        train_dataset, val_dataset, test_dataset = random_split(
+            dataset,
+            [train_size, val_size, test_size]
+        )
+    else:
+        train_dataset = dataset[:train_size]
+        val_dataset = dataset[train_size:train_size + val_size]
+        test_dataset = dataset[train_size + val_size:]
     return train_dataset, val_dataset, test_dataset

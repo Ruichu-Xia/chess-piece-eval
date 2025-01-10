@@ -16,6 +16,7 @@ tqdm = "^4.67.1"
 pydantic-settings = "^2.7.1"
 torch = "^2.5.1"
 chess = "^1.11.1"
+torchinfo = "^1.8.0"
 
 
 [tool.poetry.group.dev.dependencies]
